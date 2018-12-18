@@ -100,7 +100,7 @@ class GR():
                             for s in range(self.dim):
                                 res += self.Christ()[s,j,l] * self.Christ()[i,k,s] - self.Christ()[s,j,k] * self.Christ()[i,l,s]
                             res += sym.diff(self.Christ()[i,j,l], self.coord[k])
-                            res -= sym.diff(self.Christ()[i,j,k], coord[l])
+                            res -= sym.diff(self.Christ()[i,j,k], self.coord[l])
                             Riemann[i,j,k,l] = sym.simplify(res)
             self.Riemann = Riemann
         if display:
@@ -147,7 +147,7 @@ class GR():
             for i in range(self.dim):
                 for j in range(self.dim):
                     RicciScalar += self.inversemetric[i,j] * self.Ric()[i,j]
-            self.RicciScalar = RicciScalar
+            self.RicciScalar = sym.simplify(RicciScalar)
         if display:
             print(self.RicciScalar)
         return self.RicciScalar
@@ -159,7 +159,7 @@ class GR():
         if type(self.Einstein) == type(None):
             # Calculate only when it is not calculated before
             Einstein = sym.Matrix(self.Ric()) - 1/2 * self.RicSca() * self.metric
-            self.Einstein = Einstein
+            self.Einstein = sym.simplify(Einstein)
         if display:
             # To display only independent non-zero components. No output means that it satisfies vacuum Einstein field equation
             Einstein = self.Einstein
