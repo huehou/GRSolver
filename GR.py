@@ -99,7 +99,7 @@ class GR():
                             res = 0
                             for s in range(self.dim):
                                 res += self.Christ()[s,j,l] * self.Christ()[i,k,s] - self.Christ()[s,j,k] * self.Christ()[i,l,s]
-                            res += sym.diff(self.Christ()[i,j,l], coord[k])
+                            res += sym.diff(self.Christ()[i,j,l], self.coord[k])
                             res -= sym.diff(self.Christ()[i,j,k], coord[l])
                             Riemann[i,j,k,l] = sym.simplify(res)
             self.Riemann = Riemann
@@ -183,7 +183,7 @@ if __name__ == "__main__":
     
     print()
 
-    print('The Schwarzschil metric is: ')
+    print('The Schwarzschild metric is: ')
     print(np.array(test.metric))
     
     print()
