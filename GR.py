@@ -35,7 +35,7 @@ class GR():
     >>> coord = [t, r, theta, phi]
 
     Then we key in the metric
-    >>> metric = sym.Matrix([[-1 + 2*m/r, 0, 0, 0], [0, (1 - 2*m/r)**(-1), 0, 0], [0, 0, r**2, 0], [0, 0, 0, r**2 * sym.sin(theta)**2]])
+    >>> metric = [[-1 + 2*m/r, 0, 0, 0], [0, (1 - 2*m/r)**(-1), 0, 0], [0, 0, r**2, 0], [0, 0, 0, r**2 * sym.sin(theta)**2]]
 
     Initialise the GR Solver
     >>> test = GR(coord, metric)
@@ -46,11 +46,11 @@ class GR():
 
     def __init__(self, coord, metric):
         '''
-        Input the metric as a sympy Matrix object. You can input the components of any metric here, but you must specify them as explicit functions of the coordinates.
+        Input the metric as a list of list. You can input the components of any metric here, but you must specify them as explicit functions of the coordinates.
         '''
         self.coord = coord # Defining a list of coordinates
-        self.metric = metric # Defining the metric
-        self.inversemetric = metric**(-1) # The inverse metric
+        self.metric = sym.Matrix(metric) # Defining the metric
+        self.inversemetric = sym.Matrix(metric)**(-1) # The inverse metric
         self.dim = len(coord) # The dimension of the system
         self.Christoffel = None # Christoffel symbols
         self.Riemann = None # Riemann curvature tensor
@@ -174,7 +174,7 @@ if __name__ == "__main__":
     # Example: Schwarzschil metric
     t, r, theta, phi, m = sym.symbols('t r theta phi m')
     coord = [t, r, theta, phi]
-    metric = sym.Matrix([[-1 + 2*m/r, 0, 0, 0], [0, (1 - 2*m/r)**(-1), 0, 0], [0, 0, r**2, 0], [0, 0, 0, r**2 * sym.sin(theta)**2]])
+    metric = [[-1 + 2*m/r, 0, 0, 0], [0, (1 - 2*m/r)**(-1), 0, 0], [0, 0, r**2, 0], [0, 0, 0, r**2 * sym.sin(theta)**2]]
     test = GR(coord, metric)
     test.Eins()
     
