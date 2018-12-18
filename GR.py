@@ -1,15 +1,47 @@
+'''
+@author: Alexander
+
+This module contains a simple implementation of a GR Solver.
+
+Overview:
+
+- class GR
+'''
+
 import numpy as np
 import sympy as sym
 
 class GR():
     '''
-    From a given metric, it computes the components of the following:
+    From a given metric, this class computes the components of the following:
     - The inverse metric
     - The Christoffel symbols
     - The Riemann tensor
     - The Ricci tensor
     - The scalar curvature
     - The Einstein tensor
+
+    Overview about the methods:
+
+    - Christ(): return the Christoffel symbols
+    - Riem(): return the Riemann curvature tensor
+    - Ric(): return the Ricci tensor
+    - RicSca(): return the Ricci scalar
+    - Eins(): return the Einstein tensor
+    
+    Example:
+    For the Schwarzschild metric, we first initialise the coordinates
+    >>> t, r, theta, phi, m = sym.symbols('t r theta phi m')
+    >>> coord = [t, r, theta, phi]
+
+    Then we key in the metric
+    >>> metric = sym.Matrix([[-1 + 2*m/r, 0, 0, 0], [0, (1 - 2*m/r)**(-1), 0, 0], [0, 0, r**2, 0], [0, 0, 0, r**2 * sym.sin(theta)**2]])
+
+    Initialise the GR Solver
+    >>> test = GR(coord, metric)
+
+    And calculate the quantities, for example, the Christoffel symbols
+    >>> Christoffel = test.Christ()
     '''
 
     def __init__(self, coord, metric):
@@ -139,9 +171,46 @@ class GR():
 
 
 if __name__ == "__main__":
-    t, r, theta, phi = sym.symbols('t r theta phi')
+    # Example: Schwarzschil metric
+    t, r, theta, phi, m = sym.symbols('t r theta phi m')
     coord = [t, r, theta, phi]
-    m = sym.symbols('m')
     metric = sym.Matrix([[-1 + 2*m/r, 0, 0, 0], [0, (1 - 2*m/r)**(-1), 0, 0], [0, 0, r**2, 0], [0, 0, 0, r**2 * sym.sin(theta)**2]])
     test = GR(coord, metric)
-    test.Eins(True)
+    test.Eins()
+    
+    print('The coordinates are:')
+    print(np.array(test.coord))
+    
+    print()
+
+    print('The Schwarzschil metric is: ')
+    print(np.array(test.metric))
+    
+    print()
+    
+    print('The inverse metric is:')
+    print(np.array(test.inversemetric))
+    
+    print()
+    
+    print('The independent non-zero Christoffel symbols are:')
+    test.Christ(True)
+    
+    print()
+    
+    print('The independent non-zero Riemann tensor components are:')
+    test.Riem(True)
+    
+    print()
+    
+    print('The independent non-zero Ricci tensor components are:')
+    test.Ric(True)
+    
+    print()
+    
+    print('The Ricci scalar is: {}'.format(test.RicciScalar))
+    
+    print()
+    
+    print('The Einstein tensor is:')
+    print(np.array(test.Einstein))
