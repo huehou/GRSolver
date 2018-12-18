@@ -1,6 +1,6 @@
 # GR Solver
 
-This is a Python program that translates the *Mathematica* notebook **Curvature and the Einstein Equation** to a Python program. As of now, the plan is, from a given metric $g_{\alpha \beta}$, it computes the components of the following:
+This is a Python program that translates the *Mathematica* notebook **Curvature and the Einstein Equation** to a Python program. As of now, the plan is, from a given metric !equation(https://latex.codecogs.com/gif.latex?g_%7B%5Cmu%20%5Cnu%7D), it computes the components of the following:
 - The inverse metric, $g^{\alpha \beta}$
 - The Christoffel symbols, $\Gamma^{\lambda}_{\mu \nu}$
 - The Riemann tensor, $R^{\lambda}_{\mu \nu \sigma}$
@@ -39,6 +39,7 @@ print(np.array(test.inversemetric))
 ## Calculating the Christoffel symbols
 The Christoffel symbols are defined as
 > $$\Gamma^{\lambda}_{\mu \nu} = \frac{1}{2} g^{\lambda \sigma} (\partial_\mu g_{\sigma \nu} + \partial_\nu g_{\sigma \mu} - \partial_\sigma g_{\mu \nu}) \;.$$
+
 To calculate the Christoffel symbols, one needs only to call
 ```python
 print(np.array(test.Christ()))
