@@ -1,6 +1,6 @@
 # GR Solver
 
-This is a Python program that translates the *Mathematica* notebook **Curvature and the Einstein Equation** to a Python program. As of now, the plan is, from a given metric !equation(https://latex.codecogs.com/gif.latex?g_%7B%5Cmu%20%5Cnu%7D), it computes the components of the following:
+This is a Python program that translates the *Mathematica* notebook **Curvature and the Einstein Equation** to a Python program. As of now, the plan is, from a given metric ![equation](https://latex.codecogs.com/gif.latex?g_%7B%5Cmu%20%5Cnu%7D), it computes the components of the following:
 - The inverse metric, $g^{\alpha \beta}$
 - The Christoffel symbols, $\Gamma^{\lambda}_{\mu \nu}$
 - The Riemann tensor, $R^{\lambda}_{\mu \nu \sigma}$
