@@ -20,6 +20,8 @@ class GR():
         self.Christoffel = None
         self.Riemann = None
         self.Ricci = None
+        self.RicciScalar = None
+        self.Einstein = None
 
     def Christ(self, display = False):
         '''
@@ -27,7 +29,7 @@ class GR():
         Only independent non-zero components are displayed. The Christoffel symbols are symmetric under interchange of the last two indices.
         '''
         if type(self.Christoffel) == type(None):
-            Christoffel = np.ones([self.dim, self.dim, self.dim])*coord[0]
+            Christoffel = np.ones([self.dim, self.dim, self.dim])*self.coord[0]
             for i in range(self.dim):
                 for j in range(self.dim):
                     for k in range(self.dim):
@@ -48,7 +50,7 @@ class GR():
 
     def Riem(self, display = False):
         if type(self.Riemann) == type(None):
-            Riemann = np.ones([self.dim, self.dim, self.dim, self.dim])*coord[0]
+            Riemann = np.ones([self.dim, self.dim, self.dim, self.dim])*self.coord[0]
             for i in range(self.dim):
                 for j in range(self.dim):
                     for k in range(self.dim):
@@ -72,7 +74,7 @@ class GR():
 
     def Ric(self, display = False):
         if type(self.Ricci) == type(None):
-            Ricci = np.ones([self.dim, self.dim])*coord[0]
+            Ricci = np.ones([self.dim, self.dim])*self.coord[0]
             for j in range(self.dim):
                 for l in range(self.dim):
                     res = 0
@@ -88,10 +90,34 @@ class GR():
                         print('Ricci[{},{}] = {}'.format(j, l, Ricci[j,l]))
         return self.Ricci
 
+    def RicSca(self, display = False):
+        if type(self.RicciScalar) == type(None):
+            RicciScalar = 0
+            for i in range(self.dim):
+                for j in range(self.dim):
+                    RicciScalar += self.inversemetric[i,j] * self.Ric()[i,j]
+            self.RicciScalar = RicciScalar
+        if display:
+            print(self.RicciScalar)
+        return self.RicciScalar
+
+    def Eins(self, display = False):
+        if type(self.Einstein) == type(None):
+            Einstein = sym.Matrix(self.Ric()) - 1/2 * self.RicSca() * self.metric
+            self.Einstein = Einstein
+        if display:
+            Einstein = self.Einstein
+            for j in range(self.dim):
+                for l in range(j+1):
+                    if Einstein[j,l] != 0:
+                        print('Einstein[{},{}] = {}'.format(j, l, Einstein[j,l]))
+        return self.Einstein
+
+
 if __name__ == "__main__":
     t, r, theta, phi = sym.symbols('t r theta phi')
     coord = [t, r, theta, phi]
     m = sym.symbols('m')
     metric = sym.Matrix([[-1 + 2*m/r, 0, 0, 0], [0, (1 - 2*m/r)**(-1), 0, 0], [0, 0, r**2, 0], [0, 0, 0, r**2 * sym.sin(theta)**2]])
     test = GR(coord, metric)
-    test.Ric(True)
+    test.Eins(True)
