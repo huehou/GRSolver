@@ -1,6 +1,11 @@
 # GR Solver
 
-This is a Python program that translates the *Mathematica* notebook **Curvature and the Einstein Equation** to a Python program. As of now, the plan is, from a given metric ![equation](https://latex.codecogs.com/gif.latex?g_%7B%5Cmu%20%5Cnu%7D), it computes the components of the following:
+## Disclaimer
+This program translates the codes in **Curvature and the Einstein Equation** from *Mathematica* to *Python*. As such, most text in the original file has been copied into the README file. Those who are interested can download the original *Mathematica* file from [here](http://web.physics.ucsb.edu/~gravitybook/mathematica.html).
+
+## Introduction
+
+This is a Python program that translates the *Mathematica* notebook **Curvature and the Einstein Equation** to a Python program. As of now, the plan is, from a given metric $g_{\alpha \beta}$, it computes the components of the following:
 - The inverse metric, $g^{\alpha \beta}$
 - The Christoffel symbols, $\Gamma^{\lambda}_{\mu \nu}$
 - The Riemann tensor, $R^{\lambda}_{\mu \nu \sigma}$
@@ -48,4 +53,71 @@ If one is interested in only the non-zero Christoffel symbols, then one can call
 ```python
 test.Christ(True)
 ```
-In the output the symbol `Gamma[1,2,3]` stands for $\Gamma^1_{23}$. Because the Christoffel symbols are symmetric under interchange of the last two indices, only the independent components are displayed.
+In the output the symbol `Gamma[1,2,3]` stands for $\Gamma^{1}_{23}$. Because the Christoffel symbols are symmetric under interchange of the last two indices, only the independent components are displayed.
+
+## Calculating Riemann tensor
+
+The components of the Riemann tensor, $R^{\lambda}_{\mu \nu \sigma}$ are calculated using the definition
+
+> $$R^{\lambda}_{\mu \nu \sigma} = \partial_\nu \Gamma^{\lambda}_{\mu \sigma} - \partial_\sigma \Gamma^{\lambda}_{\mu \nu} + \Gamma^{\eta}_{\mu \sigma} \Gamma^{\lambda}_{\eta \nu} - \Gamma^{\eta}_{\mu \nu} \Gamma^{\lambda}_{\eta \sigma} \;.$$
+
+To calculate the Riemann tensor, one needs only to call
+
+```python
+test.Riem()
+```
+
+If one is interested in only the non-zero components of the Riemann tensor, then one can call
+
+```python
+test.Riem(True)
+```
+In the output, the symbol `R[1,2,1,3]` stands for $R^{1}_{213}$, and similarly for the other components. You can obtain `R[1,2,3,1]` from `R[1,2,1,3]` using the antisymmetry of the Riemann tensor under exchange of the last two indices. The antisymmetry under exchange of the first two indices of $R_{\lambda \mu \nu \sigma}$ is not evident in the output because the components of $R^{\lambda}_{\mu \nu \sigma}$ are displayed.
+
+## Calculating the Ricci tensor
+
+The Ricci tensor $R_{\mu \nu}$ is obtained by contracting the first and third indices of the Riemann tensor,
+
+> $$R_{\mu \nu} = R^{\lambda}_{\mu \lambda \nu}$$
+
+This can be calculated by calling
+```python
+test.Ric()
+```
+To display the non-zero components of the Ricci tensor, use
+```python
+test.Ric(True)
+```
+Since Ricci tensor is symmetric, only the independent components are displayed. A vanishing table (as with the Schwarzschild metric example) means that the vacuum Einstein equation is satisfied.s
+
+## Calculating Ricci Scalar
+
+The Ricci scalar $R$ is calculated by contracting the Ricci tensor. This is done with the help of the contravariant metric
+
+> $$R = g^{\mu \nu} R_{\mu \nu} \;.$$
+
+This can be calculated by calling
+
+```python
+print(test.RicSca())
+```
+
+## Calculating the Einstein tensor
+
+The Einstein tensor is
+
+> $$ G_{\mu \nu} = R_{\mu \nu} - \frac{1}{2} g_{\mu \nu} R \;,
+
+which is the left hand side of the Einstein field equation
+
+> $$G_{\mu \nu} = 8 \pi T_{\mu \nu}$$
+
+This can be calculated by calling
+```python
+test.Eins()
+```
+To display only non-zero components of the Einstein tensor, one can call
+```python
+test.Eins(True)
+```
+to print the non-zero components of the Einstein tensor. A vanishing table meanst that the vacuum Einstein equatoin is satisfied.
