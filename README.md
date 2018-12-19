@@ -1,7 +1,7 @@
 # GR Solver
 
 ## Disclaimer
-This program translates the codes in **Curvature and the Einstein Equation** from *Mathematica* to *Python*. As such, most text in the original file has been copied into the README file. Those who are interested can download the original *Mathematica* file from [here](http://web.physics.ucsb.edu/~gravitybook/mathematica.html).
+This program is the code in **Curvature and the Einstein Equation** translated from *Mathematica* to *Python*. As such, most texts in the original file has been copied into the README file. Those who are interested can download the original *Mathematica* file from [here](http://web.physics.ucsb.edu/~gravitybook/mathematica.html).
 
 ## Introduction
 
